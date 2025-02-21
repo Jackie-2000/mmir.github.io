@@ -267,7 +267,7 @@
 
             <div class="content">
               <p class="mt-3">
-                The accuracy of six MLLMs under the two evaluation settings. Proprietary models demonstrate higher performance as well as larger performance gain in the MCQ setting.
+                The accuracy of six MLLMs under the two evaluation settings. Proprietary models demonstrate higher performance as well as larger performance gain in the MCQ setting. While MCQ-style prompts boost GPT-4o's accuracy by ~15%, open-source models gain minimal benefits, highlighting fundamental reasoning gaps.
               </p>
             
               <table class="js-sort-table" id="results">
@@ -376,86 +376,46 @@
             
               <div>
                 <p>🚨 To submit your results to the leaderboard, please send to <a href="mailto:qyan79@ucsc.edu">this email</a> with your result JSON files.</p>
-                <p>🚨 For more submission details, please refer to <a href="https://github.com/eric-ai-lab/ProbMed">this link.</a></p>
+                <p>🚨 For more submission details, please refer to <a href="https://github.com/eric-ai-lab/MMIR">this link.</a></p>
               </div>
-            </div>
             
-        
-        <div id="results-carousel" class="carousel results-carousel">
-          <div class="box m-5">
-            <div class="content has-text-centered">
-              <img src="static/images/results_adv_RAD.png" alt="grade-lv" width="60%"/>
-              <p>Model accuracy on the VQA-RAD test subset before and after introducing adversarial pairs. The table demonstrates the significant drop in accuracy across various models when adversarial pairs are added, highlighting the models' vulnerabilities to adversarial questions. The percentage decrease in accuracy is noted in parentheses.</p>
+              <h3 class="title is-4 mt-4">Fine-grained error analysis</h3>
+              <ul>
+                <li><b>Performance Gap:</b> Proprietary models excel at detecting <i>factual contradictions</i> and <i>identity mismatches</i>, but even top models like GPT-4o show limitations in resolving <i>temporal/spatial incoherence</i>.</li>
+                <li><b>Modality Matters:</b> Models handle text-text inconsistencies best but falter with image-image comparisons, exposing weaknesses in visual reasoning.</li>
+                <li><b>Layout Complexity:</b> Performance drops sharply as artifacts become visually dense—models lose up to 40% accuracy on cluttered layouts compared to simple ones.</li>
+              </ul>
+
+              <!-- figures -->
+              <div id="results-carousel" class="carousel results-carousel">
+                <div class="box m-5">
+                  <div class="content has-text-centered">
+                    <img src="static/images/ablation_error.png" alt="grade-lv" width="60%"/>
+                    <p>
+                      Fine-grained analysis of model performance across Inconsistency Categories and Modalities.
+                    </p>
+                  </div>
+                </div>
+                <div class="box m-5">
+                  <div class="content has-text-centered">
+                    <img src="static/images/ablation_count.png" alt="grade-lv" width="60%"/>
+                    <p>
+                      Model performance on layout complexity.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <h3 class="title is-4 mt-4">Fine-grained error analysis</h3>
+              <ul>
+                <li><b>Performance Gap:</b> Proprietary models excel at detecting <i>factual contradictions</i> and <i>identity mismatches</i>, but even top models like GPT-4o show limitations in resolving <i>temporal/spatial incoherence</i>.</li>
+                <li><b>Modality Matters:</b> Models handle text-text inconsistencies best but falter with image-image comparisons, exposing weaknesses in visual reasoning.</li>
+                <li><b>Layout Complexity:</b> Performance drops sharply as artifacts become visually dense—models lose up to 40% accuracy on cluttered layouts compared to simple ones.</li>
+              </ul>
             </div>
           </div>
-          <div class="box m-5">
-            <div class="content has-text-centered">
-              <img src="static/images/results_adv_probmed.png" alt="grade-lv" width="60%"/>
-              <p>
-                Model accuracy after adding adversarial pairs to all question types except for abnormality in ProbMed. The results indicate a substantial decline in accuracy, underlining the robustness of ProbMed in challenging LMMs. The percentage drop in accuracy is noted in parentheses.</p>
-            </div>
-          </div>
-        </div>
-        
-        </div>
       </div>
     </div>
-
-    <!-- procedural eval -->
-    <div class="columns is-centered">
-      <div class="column is-full has-text-centered content">
-        <h2 class="title is-3" id="rq2"> How Reliable Are LMMs in Medical Diagnosis?</h2>
-        <div class="content has-text-justified">
-        <!-- main -->
-        <ul>
-          <li><b>Performance across Diagnostic Questions</b> 
-          <p>
-            After correcting model accuracy by introducing adversarial pairs, we continued to address the second research question and conducted diagnostic probing ranging from general to specialized diagnostic questions using the ProbMed dataset.
-          </p>
-          <p>
-            While GPT-4o, GPT-4V, and Gemini Pro outperform other models and excel in general tasks such as recognizing image modality and organs, their low performance in specialized tasks like determining the existence of abnormalities and answering fine-grained questions about condition/finding and position highlights a significant gap in their ability to aid in real-life diagnosis.
-          </p></li>
-        </ul>
-        
-
-        <!-- error analysis -->
-        <ul>
-          <li><b>Error Analysis in Procedural Diagnosis</b> 
-          <p>
-            An error analysis focusing on GPT-4V and Gemini Pro across specialized question types - Abnormality, Condition/Finding, and Position is further conducted. Each accuracy measurement is conditional on the model successfully answering the preceding diagnostic questions, reflecting a procedural diagnosis approach. This analysis reveals both models' vulnerabilities to hallucination errors, particularly as they progress through the diagnostic procedure, with Gemini Pro being more prone to accepting false conditions and positions.
-          </p>
-          </li>
-        </ul>
-        <div class="box m-5">
-          <div class="content has-text-centered">
-            <img src="./static/images/error_analysis.png" alt="error" width="60%"/>
-            <p>
-              Error Analysis of GPT-4V and Gemini Pro on ProbMed. The table shows the accuracy and types of errors for three specialized question types. Errors are categorized into wrong answers, rejection to answer, denying ground truth, and accepting hallucinations, providing a detailed breakdown of model performance and failure modes.</p>
-          </div>
-        </div>
-        
-        <!-- transferability -->
-        <ul>
-          <li><b>Transferability of Domain Expertise</b> 
-          <p>
-            CheXagent, a model trained exclusively on chest X-rays images, performs best in detecting abnormalities and identifying conditions/findings among all seven models when tested on chest X-ray images. We conducted a finer-grained analysis to explore whether the model's expertise in identifying features of a particular organ can be transferred to other imaging modalities.
-          </p>
-          <p>
-            CheXagent achieves significantly higher accuracy in identifying chestrelated features compared to other organs as well as demonstrating higher accuracy in identifying conditions and findings in CT scans and MRIs of the chest compared with other organs within the same unseen modality. This indicates that specialized knowledge gained on chest X-rays can be transferred to other imaging modalities of the same organ in a zero-shot manner, highlighting the potential for cross-modality expertise transfer in real-life medical imaging diagnostics.
-          </p>
-          </li>
-        </ul>
-        <div class="box m-5">
-          <div class="content has-text-centered">
-            <img src="./static/images/transfer.png" alt="error" width="60%"/>
-            <p>
-              Accuracy comparison of CheXagent in identifying organs and conditions/findings across different modalities. The model demonstrates significantly higher accuracy in identifying organs on chest images compared to images of other organs for both MRI and CT scans. Additionally, CheXagent shows improved accuracy in identifying conditions/findings on chest images, indicating the transferability of its specialized knowledge from chest X-ray training to other imaging modalities.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-
   </div>
 </section>
 
@@ -463,14 +423,7 @@
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title is-3 has-text-centered">BibTeX</h2>
-    <pre><code>@misc{yan2024worse,
-      title={Worse than Random? An Embarrassingly Simple Probing Evaluation of Large Multimodal Models in Medical VQA}, 
-      author={Qianqi Yan and Xuehai He and Xiang Yue and Xin Eric Wang},
-      year={2024},
-      eprint={2405.20421},
-      archivePrefix={arXiv},
-      primaryClass={cs.AI}
-}</code></pre>
+    <pre><code>TBD</code></pre>
   </div>
 </section>
 
