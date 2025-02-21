@@ -197,27 +197,38 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Overview</h2>
         <div class="content has-text-justified">
-          <h3 class="title is-4">Key Features</h3>
-            <ul>
-              <li>534 carefully validated samples</li>
-              <li>Real-world artifacts: Webpages, Slides, Posters</li>
-              <li>Synthetic inconsistency injection</li>
-              <li>Multi-stage verification pipeline</li>
-            </ul>
+          <!-- figures -->
           <div id="results-carousel" class="carousel results-carousel">
             <div class="box m-5">
               <div class="content has-text-centered">
-                <img src="static/images/stats.png" alt="Dataset Statistics">
+                <img src="static/images/stats.png" alt="Dataset Statistics" width="40%">
             <p class="has-text-centered"><b>MMIR Statistics</b>. Breakdown of the dataset by artifact category and error type.</p>
               </div>
             </div>
             <div class="box m-5">
               <div class="content has-text-centered">
-                <img src="static/images/data_filter.png" alt="data filtering">
+                <img src="static/images/data_filter.png" alt="data filtering" width="80%">
                 <p> MMIR Data filtering process. Details in paper.</p>
               </div>
             </div>
           </div>
+
+          <p>
+            The MMIR benchmark was meticulously constructed through a four-stage curation pipeline to ensure high-quality, diverse, and challenging test cases. We began by collecting 521 real-world artifacts — including webpages, presentations, and posters — from trusted sources like VisualWebArena and Zenodo. These artifacts were parsed to extract structured metadata, including element types, content, and spatial layouts.
+          </p>
+          <p>
+            To simulate realistic errors, we used advanced multimodal models to propose 2,534 synthetic inconsistencies across five predefined categories. These proposals underwent automated validation to ensure technical feasibility and alignment with error definitions. Approved edits were then programmatically applied to artifacts using tools like Chrome DevTools (for webpages) and Python libraries (for presentations).
+          </p>
+          <p>
+            Finally, human experts rigorously reviewed the modified samples, filtering out unrealistic cases and retaining 534 validated entries that balance complexity and real-world relevance. The resulting dataset spans diverse artifact types and error categories, with carefully designed evaluation prompts for both open-ended and multiple-choice settings. 
+          </p>
+          <h3 class="title is-4">Key Features</h3>
+          <ul>
+            <li>534 carefully validated samples</li>
+            <li>Real-world artifacts: Webpages, Slides, Posters</li>
+            <li>Synthetic inconsistency injection</li>
+            <li>Multi-stage verification pipeline</li>
+          </ul>
 
           <div class="column">
             <h3 class="title is-4 mt-4">Evaluation Settings</h3>
