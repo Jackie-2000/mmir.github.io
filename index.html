@@ -208,7 +208,7 @@
             <div class="box m-5">
               <div class="content has-text-centered">
                 <img src="static/images/data_filter.png" alt="data filtering" width="80%">
-                <p> MMIR Data filtering process. Details in paper.</p>
+                <p> MMIR Data filtering process.</p>
               </div>
             </div>
           </div>
@@ -222,14 +222,15 @@
           <p>
             Finally, human experts rigorously reviewed the modified samples, filtering out unrealistic cases and retaining 534 validated entries that balance complexity and real-world relevance. The resulting dataset spans diverse artifact types and error categories, with carefully designed evaluation prompts for both open-ended and multiple-choice settings. 
           </p>
-          <h3 class="title is-4">Key Features</h3>
+          <div class="column">
+          <h3 class="title is-4 mt-4">Key Features</h3>
           <ul>
             <li>534 carefully validated samples</li>
             <li>Real-world artifacts: Webpages, Slides, Posters</li>
             <li>Synthetic inconsistency injection</li>
             <li>Multi-stage verification pipeline</li>
           </ul>
-
+          </div>
           <div class="column">
             <h3 class="title is-4 mt-4">Evaluation Settings</h3>
             <ul>
@@ -253,31 +254,132 @@
 <!-- RESULTS SECTION -->
 <section class="hero is-light is-small">
   <div class="hero-body has-text-centered">
-    <h1 class="title is-1 mathvista">Experimental Analysis</h1>
+    <h1 class="title is-1 mathvista">Experiments and Analysis</h1>
   </div>
 </section>
-
 <section class="section">
   <div class="container">
-    <!-- adversarial eval -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Is Current Evaluation of LMMs for Med-VQA Reliable?</h2>
         <div class="content has-text-justified">
-          <ul>
-            <li><b>Probing Evaluation with Adversarial Pairs in VQA-RAD</b> 
-            <p>
-              We construct adversarial pairs for 118 test instances where the answer is "yes" out of 272 closed-ended question-answers pairs within the test set of an existing benchmark. Each adversarial pair was manually created such that, based on the limited information from the original question-answer pair, the answer to the adversarial question had to be negated. This process resulted in 236 question-answer pairs in total. The adversarial questions in this subset are less challenging than those in ProbMed, as they often involve a simple semantic negation of the original question due to limited information.
-            </p>
-            <p>
-              The results reveal the significant impact of adversarial pairs on model performance. Although the original accuracy appears very high for some underperforming models, the accuracy drops drastically after balancing the subset with adversarial pairs: 19.49% for GPT-4o, 6.78% for GPT-4V and 16.95% for Gemini Pro, with an average decrease of <b>35.84%</b> across the tested models.
-            </p></li>
+          <div class="column">
+            Our comprehensive evaluation of six state-of-the-art multimodal models (including proprietary systems like <b>o1</b> and <b>GPT-4o</b>, and open-source models like <b>Qwen2.5-VL, LLaVA-NeXT, InternVL2.5</b> and <b>Phi-3.5-Vision</b>) reveals critical insights into multimodal inconsistency reasoning. Proprietary models significantly outperform open-source models, with o1 achieving over 50% accuracy overall—surpassing open-source models by more than 30%. While all models struggle with complex inconsistencies, proprietary systems show stronger alignment between visual and textual reasoning, particularly when provided with contextual cues.
 
-            <li><b> Probing Evaluation with Adversarial Pairs in ProbMed</b>
-            <p>
-              Similar significant impact of adversarial pairs are observed in ProbMed. The accuracy of more capable models is generally less affected by the introduction of challenging adversarial pairs. However, even the most robust models experience <b>a minimum drop of 11.19%</b> in accuracy when tested with ProbMed's challenging questions, with an average decrease of <b>37.09%</b> across the tested models, highlighting the critical role of probing evaluation in evaluating Med-VQA performance comprehensively.
-            </p></li>
-          </ul>
+            <div class="content">
+              <p class="mt-3">
+                The accuracy of six MLLMs under the two evaluation settings. Proprietary models demonstrate higher performance as well as larger performance gain in the MCQ setting.
+              </p>
+            
+              <table class="js-sort-table" id="results">
+                <tr>
+                  <td colspan="5" style="text-align:center;"><strong>Open-ended</strong></td>
+                  <td colspan="5" style="text-align:center;"><strong>Multiple-choice</strong></td>
+                </tr>
+                <tr>
+                  <td class="js-sort-number"><strong>#</strong></td>
+                  <td class="js-sort-number"><strong>Model</strong></td>
+                  <td class="js-sort-number"><strong>Source</strong></td>
+                  <td class="js-sort-number"><strong>Web</strong></td>
+                  <td class="js-sort-number"><strong>Office</strong></td>
+                  <td class="js-sort-number"><strong>Poster</strong></td>
+                  <td class="js-sort-number"><strong>Overall</strong></td>
+                  <td class="js-sort-number"><strong>Web</strong></td>
+                  <td class="js-sort-number"><strong>Office</strong></td>
+                  <td class="js-sort-number"><strong>Poster</strong></td>
+                  <td class="js-sort-number"><strong>Overall</strong></td>
+                </tr>
+            
+                <!-- Proprietary Models -->
+                <tr><td colspan="11" style="background-color:#f0f0f0;"><em>Proprietary Models</em></td></tr>
+                <tr>
+                  <td>1</td>
+                  <td><b>o1 (1217)</b></td>
+                  <td><a href="https://openai.com/o1/" class="ext-link" style="font-size: 16px;">Link</a></td>
+                  <td>47.91</td>
+                  <td>59.19</td>
+                  <td>38.73</td>
+                  <td>51.40</td>
+                  <td>47.91</td>
+                  <td>58.52</td>
+                  <td>46.47</td>
+                  <td>52.15</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td><b>GPT-4o (1120)</b></td>
+                  <td><a href="https://openai.com/index/hello-gpt-4o/" class="ext-link" style="font-size: 16px;">Link</a></td>
+                  <td>25.00</td>
+                  <td>42.60</td>
+                  <td>30.98</td>
+                  <td>33.14</td>
+                  <td>37.29</td>
+                  <td>58.96</td>
+                  <td>47.88</td>
+                  <td>47.75</td>
+                </tr>
+            
+                <!-- Open-sourced Models -->
+                <tr><td colspan="11" style="background-color:#f0f0f0;"><em>Open-sourced Models</em></td></tr>
+                <tr>
+                  <td>3</td>
+                  <td><b>Qwen2.5-VL-7B</b></td>
+                  <td><a href="https://github.com/QwenLM/Qwen2.5-VL" class="ext-link" style="font-size: 16px;">Link</a></td>
+                  <td>8.54</td>
+                  <td>29.14</td>
+                  <td>11.97</td>
+                  <td>17.60</td>
+                  <td>14.37</td>
+                  <td>33.18</td>
+                  <td>16.90</td>
+                  <td>22.56</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td><b>LLaVA-NeXT-7B</b></td>
+                  <td><a href="https://github.com/LLaVA-VL/LLaVA-NeXT" class="ext-link" style="font-size: 16px;">Link</a></td>
+                  <td>10.20</td>
+                  <td>21.97</td>
+                  <td>7.04</td>
+                  <td>14.70</td>
+                  <td>11.45</td>
+                  <td>25.33</td>
+                  <td>5.63</td>
+                  <td>16.47</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td><b>InternVL2.5-8B</b></td>
+                  <td><a href="https://github.com/OpenGVLab/InternVL" class="ext-link" style="font-size: 16px;">Link</a></td>
+                  <td>7.70</td>
+                  <td>24.21</td>
+                  <td>4.92</td>
+                  <td>14.23</td>
+                  <td>9.37</td>
+                  <td>23.54</td>
+                  <td>11.97</td>
+                  <td>15.63</td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td><b>Phi-3.5-Vision-4B</b></td>
+                  <td><a href="https://techcommunity.microsoft.com/blog/azure-ai-services-blog/discover-the-new-multi-lingual-high-quality-phi-3-5-slms/4225280" class="ext-link" style="font-size: 16px;">Link</a></td>
+                  <td>6.87</td>
+                  <td>24.43</td>
+                  <td>7.04</td>
+                  <td>14.23</td>
+                  <td>1.66</td>
+                  <td>8.52</td>
+                  <td>0.00</td>
+                  <td>4.30</td>
+                </tr>
+              </table>
+            
+              <div>
+                <p>🚨 To submit your results to the leaderboard, please send to <a href="mailto:qyan79@ucsc.edu">this email</a> with your result JSON files.</p>
+                <p>🚨 For more submission details, please refer to <a href="https://github.com/eric-ai-lab/ProbMed">this link.</a></p>
+              </div>
+            </div>
+            
         
         <div id="results-carousel" class="carousel results-carousel">
           <div class="box m-5">
@@ -314,151 +416,7 @@
             While GPT-4o, GPT-4V, and Gemini Pro outperform other models and excel in general tasks such as recognizing image modality and organs, their low performance in specialized tasks like determining the existence of abnormalities and answering fine-grained questions about condition/finding and position highlights a significant gap in their ability to aid in real-life diagnosis.
           </p></li>
         </ul>
-        <div class="content">
-          <p class="mt-3"> Categorical and overall accuracy (%) of different models aggregated among all image types in ProbMed. The best result in each question category is in-bold, and the second best is underlined.
-          </p>
-
-          <table class="js-sort-table" id="results">
-            <tr>
-                <td class="js-sort-number"><strong>#</strong></td>
-                <td class="js-sort-number"><strong>Model</strong></td>
-                <td class="js-sort-number"><strong>Source</strong></td>
-                <td class="js-sort-number"><strong>Overall</strong></td>
-                <td class="js-sort-number"><strong>Modality</strong></td>
-                <td class="js-sort-number"><strong>Organ</strong></td>
-                <td class="js-sort-number"><strong>Abnormality</strong></td>
-                <td class="js-sort-number"><strong>Condition/Finding</strong></td>
-                <td class="js-sort-number"><strong>Position</strong></td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td><b class="">GPT-4o</b></td>
-              <td><a href="https://openai.com/index/hello-gpt-4o/" class="ext-link" style="font-size: 16px;">Link</a></td>
-              <td><b>55.60</b></td>
-              <td><b>97.42</b></td>
-              <td>69.46</td>
-              <td>61.97</td>
-              <td><u>29.30</u></td>
-              <td><b>24.06</b></td>         
-            </tr>
-            <tr>
-              <td>2</td>
-              <td><b class="">GPT-4V</b></td>
-              <td><a href="https://openai.com/index/gpt-4v-system-card/" class="ext-link" style="font-size: 16px;">Link</a></td>
-              <td><u>55.28</u></td>
-              <td>92.51</td>
-              <td>71.73</td>
-              <td>53.30</td>
-              <td><u>35.19</u></td>
-              <td><u>22.40</u></td>         
-            </tr>
-            <tr>
-              <td>3</td>
-              <td><b class="">Gemini 1.5 Pro</b></td>
-              <td><a href="https://storage.googleapis.com/deepmind-media/gemini/gemini_v1_5_report.pdf" class="ext-link" style="font-size: 16px;">Link</a></td>
-              <td>55.08</td>
-              <td><u>96.47</u></td>
-              <td>75.69</td>
-              <td><u>62.59</u></td>
-              <td>27.93</td>
-              <td>17.54</td>            
-            </tr>
-            <tr>
-              <td>4</td>
-              <td><b class="">Med-Flamingo</b></td>
-              <td><a href="https://github.com/snap-stanford/med-flamingo" class="ext-link" style="font-size: 16px;">Link</a></td>
-              <td>35.66</td>
-              <td>44.15</td>
-              <td>61.39</td>
-              <td>50.00</td>
-              <td>26.33</td>
-              <td>5.65</td>                    
-            </tr>
-            <tr>
-              <td>5</td>
-              <td><b class="">CheXagent</b></td>
-              <td><a href="https://github.com/Stanford-AIMI/CheXagent" class="ext-link" style="font-size: 16px;">Link</a></td>
-              <td>30.61</td>
-              <td>37.25</td>
-              <td>33.95</td>
-              <td><b>73.31</b></td>
-              <td>28.52</td>
-              <td>7.48</td>                    
-            </tr>
-            <tr>
-              <td>6</td>
-              <td><b class="">BiomedGPT</b></td>
-              <td><a href="https://github.com/taokz/BiomedGPT" class="ext-link" style="font-size: 16px;">Link</a></td>
-              <td>33.34</td>
-              <td>60.25</td>
-              <td>46.81</td>
-              <td>50.31</td>
-              <td>14.13</td>
-              <td>6.11</td>                    
-            </tr>
-            <tr>
-              <td>7</td>
-              <td><b class="">LLaVA-Med</b></td>
-              <td><a href="https://github.com/microsoft/LLaVA-Med" class="ext-link" style="font-size: 16px;">Link</a></td>
-              <td>17.90</td>
-              <td>5.49</td>
-              <td>32.98</td>
-              <td>38.76</td>
-              <td>20.39</td>
-              <td>5.37</td>               
-            </tr>
-            <tr>
-              <td>8</td>
-              <td><b class="">MiniGPT-v2</b></td>
-              <td><a href="https://github.com/Vision-CAIR/MiniGPT-4/tree/main" class="ext-link" style="font-size: 16px;">Link</a></td>
-              <td>27.67</td>
-              <td>3.25</td>
-              <td><u>76.29</u></td>
-              <td>50.09</td>
-              <td>15.23</td>
-              <td>8.05</td>                  
-            </tr>
-            <tr>
-              <td>9</td>
-              <td><b class="">LLaVA-v1.6 (7B)</b></td>
-              <td><a href="https://github.com/haotian-liu/LLaVA" class="ext-link" style="font-size: 16px;">Link</a></td>
-              <td>24.96</td>
-              <td>6.77</td>
-              <td><b>80.70</b></td>
-              <td>46.18</td>
-              <td>3.57</td>
-              <td>1.07</td>       
-            </tr>
-            <tr>
-              <td>10</td>
-              <td><b>LLaVA-v1 (7B)</b></td>
-              <td><a href="https://github.com/haotian-liu/LLaVA" class="ext-link" style="font-size: 16px;">Link</a></td>
-              <td>19.30</td>
-              <td>25.28</td>
-              <td>40.53</td>
-              <td>50.00</td>
-              <td>0.34</td>
-              <td>0.10</td> 
-            </tr>
-            <tr>
-              <td>*</td>
-              <td><b>Random Chance</b></td>
-              <td>-</td>
-              <td>32.13</td>
-              <td>25.00</td>
-              <td>25.00</td>
-              <td>50.00</td>
-              <td><b>35.67</b></td>
-              <td><b>36.48</b></td>                                
-            </tr>                                                      
-          </table>
-
-          <div>
-          <p>🚨 To submit your results to the leaderboard, please send to <a href="qyan79@ucsc.edu">this email</a> with your result json files.</p>
-          <p>🚨 For more submission details, please refer to <a href="https://github.com/eric-ai-lab/ProbMed">this link.</a>
-          </p>
-          </div>
-        </div>
+        
 
         <!-- error analysis -->
         <ul>
