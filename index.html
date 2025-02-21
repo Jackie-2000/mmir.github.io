@@ -411,17 +411,23 @@
                 </div>
               </div>
 
-              <h3 class="title is-4 mt-4">Fine-grained error analysis</h3>
+              <h3 class="title is-4 mt-4">Prompting Strategies Analysis</h3>
+              To enhance multimodal inconsistency reasoning, we tested three prompting approaches and has the following observations:
               <ul>
-                <li><b>Performance Gap:</b> Proprietary models excel at detecting <i>factual contradictions</i> and <i>identity mismatches</i>, but even top models like GPT-4o show limitations in resolving <i>temporal/spatial incoherence</i>.</li>
-                <li><b>Modality Matters:</b> Models handle text-text inconsistencies best but falter with image-image comparisons, exposing weaknesses in visual reasoning.</li>
-                <li><b>Layout Complexity:</b> Performance drops sharply as artifacts become visually dense—models lose up to 40% accuracy on cluttered layouts compared to simple ones.</li>
+                <li><b>Chain-of-Thought (CoT):</b> Explicit textual reasoning steps provided minimal benefits, sometimes reducing accuracy, especially for open-source models.</li>
+                <li><b>Set-of-Mark (SoM):</b> Visual bounding boxes improved GPT-4o’s performance (+5%) but confused other models, often degrading results.</li>
+                <li><b>Multimodal Interleaved CoT (MM-CoT):</b> Our novel two-stage method combined textual reasoning with iterative visual refinement.</li>
               </ul>
+  
               <div class="column">
                 <img src="static/images/probing.png" alt="probing" width="60%"/>
                 <p> <b>Probing results of different prompting methods.</b> Performance of each prompting method is directly compared with the vanilla setting. Gains are in blue and drops are in red.
               </div>
-
+              <p>
+                MM-CoT outperformed all other methods, boosting GPT-4o's accuracy by 4.4% and showing modest gains for open-source models.
+                Proprietary models benefited most from iterative cross-modal integration, while isolated prompts (CoT/SoM) proved ineffective.
+                Visual annotations only helped when guided by initial textual reasoning, highlighting the need for tightly coupled multimodal interaction.
+              </p>
             </div>
           </div>
       </div>
