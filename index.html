@@ -272,8 +272,10 @@
             
               <table class="js-sort-table" id="results">
                 <tr>
-                  <td colspan="3"> </td>
-                  <td colspan="4" style="text-align:center;"><strong>Open-ended</strong></td>
+                  <td colspan="2"> </td>
+                  <td style="text-align:right;">|</td>
+                  <td colspan="3" style="text-align:center;"><strong>Open-ended</strong></td>
+                  <td style="text-align:right;">|</td>
                   <td colspan="4" style="text-align:center;"><strong>Multiple-choice</strong></td>
                 </tr>
                 <tr>
@@ -379,19 +381,21 @@
                 <p>🚨 To submit your results to the leaderboard, please send to <a href="mailto:qyan79@ucsc.edu">this email</a> with your result JSON files.</p>
                 <p>🚨 For more submission details, please refer to <a href="https://github.com/eric-ai-lab/MMIR">this link.</a></p>
               </div>
-            
+              
+              <div>
               <h3 class="title is-4 mt-4">Fine-grained error analysis</h3>
               <ul>
                 <li><b>Performance Gap:</b> Proprietary models excel at detecting <i>factual contradictions</i> and <i>identity mismatches</i>, but even top models like GPT-4o show limitations in resolving <i>temporal/spatial incoherence</i>.</li>
                 <li><b>Modality Matters:</b> Models handle text-text inconsistencies best but falter with image-image comparisons, exposing weaknesses in visual reasoning.</li>
                 <li><b>Layout Complexity:</b> Performance drops sharply as artifacts become visually dense—models lose up to 40% accuracy on cluttered layouts compared to simple ones.</li>
               </ul>
+              </div>
 
               <!-- figures -->
               <div id="results-carousel" class="carousel results-carousel">
                 <div class="box m-5">
                   <div class="content has-text-centered">
-                    <img src="static/images/ablation_error.png" alt="grade-lv" width="60%"/>
+                    <img src="static/images/ablation_error.png" alt="grade-lv" width="80%"/>
                     <p>
                       Fine-grained analysis of model performance across Inconsistency Categories and Modalities.
                     </p>
@@ -413,6 +417,11 @@
                 <li><b>Modality Matters:</b> Models handle text-text inconsistencies best but falter with image-image comparisons, exposing weaknesses in visual reasoning.</li>
                 <li><b>Layout Complexity:</b> Performance drops sharply as artifacts become visually dense—models lose up to 40% accuracy on cluttered layouts compared to simple ones.</li>
               </ul>
+              <div class="column">
+                <img src="static/images/probing.png" alt="probing" width="60%"/>
+                <p> <b>Probing results of different prompting methods.</b> Performance of each prompting method is directly compared with the vanilla setting. Gains are in blue and drops are in red.
+              </div>
+
             </div>
           </div>
       </div>
