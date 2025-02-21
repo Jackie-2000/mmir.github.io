@@ -136,8 +136,8 @@
         <div id="results-carousel" class="carousel results-carousel">
           <div class="box m-5">
             <div class="content has-text-centered">
-              <img src="static/images/teaser.png" alt="example" width="50%"/>
-              <p> An illustration of multimodal inconsistency reasoning on a webpage.} An agent examines a webpage where the brand “IKEA AB” is mentioned, but other elements clearly refer to “Lorell.” Detecting this brand identity misattribution requires the ability to compare text fields across different sections of the page and reconcile them with accompanying images or context—an inherently multimodal reasoning task.
+              <img src="static/images/teaser.png" alt="example" width="40%"/>
+              <p> An illustration of multimodal inconsistency reasoning on a webpage. An agent examines a webpage where the brand “IKEA AB” is mentioned, but other elements clearly refer to “Lorell.” Detecting this brand identity misattribution requires the ability to compare text fields across different sections of the page and reconcile them with accompanying images or context—an inherently multimodal reasoning task.
               </p>
             </div>
           </div>
@@ -169,13 +169,17 @@
         <h2 class="title is-3">Introduction</h2>
         <div class="content has-text-justified">
           <p>
-            Large Multimodal Models (LMMs) have shown remarkable progress in medical Visual Question Answering (Med-VQA), achieving high accuracy on existing benchmarks. However, their reliability under robust evaluation is questionable. This study reveals that when subjected to simple probing evaluation, state-of-the-art models perform worse than random guessing on medical diagnosis questions. 
+            We introduce MMIR, the first benchmark for evaluating Multimodal Large Language Models (MLLMs) on detecting and reasoning about inconsistencies in layout-rich multimodal content. MMIR features 534 challenging samples across five reasoning-heavy inconsistency categories:
           </p>
+          <ul>
+            <li><i>Factual Contradiction:</i> Direct conflict between two elements (text-text, text-image, or image-image) within the modified content.</li>
+            <li><i>Identity Misattribution:</i> Mislabeling of entities (objects, locations, brands etc.) that conflict with other elements.</li>
+            <li><i>Contextual Mismatch:</i> Tonal, thematic, or situational incompatibility between elements.</li>
+            <li><i>Quantitative Discrepancy:</i>  Numerical or statistical inconsistencies between elements.</li>
+            <li><i>Temporal/Spatial Incoherence</i> Implied timelines, dates, or spatial relationships that are impossible or conflicting.</li>
+          </ul>
           <p>
-            To address this critical evaluation problem, we introduce the <b>Probing Evaluation for Medical Diagnosis (ProbMed)</b> dataset to rigorously assess LMM performance in medical imaging through <b>probing evaluation</b> and <b>procedural diagnosis</b>. Particularly, probing evaluation features pairing original questions with negation questions with hallucinated attributes, while procedural diagnosis requires reasoning across various diagnostic dimensions for each image, including modality recognition, organ identification, clinical findings, abnormalities, and positional grounding. 
-          </p>
-          <p>
-            Our evaluation reveals that top-performing models like GPT-4o, GPT-4V and Gemini Pro perform worse than random guessing on specialized diagnostic questions, indicating significant limitations in handling fine-grained medical inquiries. Besides, models like LLaVA-Med struggle even with more general questions, and results from CheXagent demonstrate the transferability of expertise across different modalities of the same organ, showing that specialized domain knowledge is still crucial for improving performance. This study underscores the urgent need for more robust evaluation to ensure the reliability of LMMs in critical fields like medical diagnosis, and current LMMs are still far from applicable to those fields.
+            Our evaluation of six state-of-the-art MLLMs reveals significant gaps in handling real-world inconsistencies, with proprietary models outperforming open-source models by up to 30%. The benchmark provides insights into current limitations and future directions for multimodal reasoning.
           </p>
         </div>
       </div>
