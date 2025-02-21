@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="Worse than Random? An Embarrassingly Simple Probing Evaluation of Large Multimodal Models in Medical VQA">
-  <meta name="keywords" content="ProbMed, Prob Med">
+    content="Multimodal Inconsistency Reasoning (MMIR): A New Benchmark for Multimodal Reasoning Models">
+  <meta name="keywords" content="MMIR, Multimodal Inconsistency">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Worse than Random? An Embarrassingly Simple Probing Evaluation of Large Multimodal Models in Medical VQA</title>
+  <title>Multimodal Inconsistency Reasoning (MMIR): A New Benchmark for Multimodal Reasoning Models</title>
 
   <link rel="icon" href="./static/images/mathvista.png">
 
@@ -45,14 +45,26 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Worse than Random? An Embarrassingly Simple Probing Evaluation of Large Multimodal Models in Medical VQA</h1>
+          <h1 class="title is-1 publication-title">Multimodal Inconsistency Reasoning (MMIR)</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
               <a href="https://Jackie-2000.github.io/">Qianqi Yan</a><sup style="color:#6fbf73;">1</sup>,</span>
             <span class="author-block">
-              <a href="https://scholar.google.com/citations?user=kDzxOzUAAAAJ&hl=en">Xuehai He</a><sup style="color:#6fbf73;">1</sup>,</span>
+              <a href="http://yfan.site/">Yue Fan</a><sup style="color:#6fbf73;">1</sup>,</span>
             <span class="author-block">
-              <a href="https://xiangyue9607.github.io/">Xiang Yue</a><sup style="color:#ed4b82">2</sup>,
+              Hongquan Li,
+            </span>
+            <span class="author-block">
+              Shan Jiang<sup style="color:#ed4b82">2</sup>,
+            </span>
+            <span class="author-block">
+              Yang Zhao<sup style="color:#ed4b82">2</sup>,
+            </span>
+            <span class="author-block">
+              Xinze Guan<sup style="color:#ed4b82">2</sup>,
+            </span>
+            <span class="author-block">
+              Ching-Chen Kuo<sup style="color:#ed4b82">2</sup>,
             </span>
             <span class="author-block">
               <a href="https://eric-xw.github.io/">Xin Eric Wang</a><sup style="color:#6fbf73;">1</sup>,
@@ -61,7 +73,7 @@
 
           <div class="is-size-5 publication-authors">
             <span class="author-block"><sup style="color:#6fbf73;">1</sup>University of California, Santa Cruz,</span><br>
-            <span class="author-block"><sup style="color:#ed4b82">2</sup>Carnegie Mellon University</span>
+            <span class="author-block"><sup style="color:#ed4b82">2</sup>eBay</span>
           </div>
 
           <div class="column has-text-centered">
@@ -87,7 +99,7 @@
               </span>
               <!-- Code Link. -->
               <span class="link-block">
-                <a href="https://github.com/eric-ai-lab/ProbMed"
+                <a href="https://github.com/eric-ai-lab/MMIR"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
@@ -97,7 +109,7 @@
               </span>
               <!-- Dataset Link. -->
               <span class="link-block">
-                <a href="https://huggingface.co/datasets/rippleripple/ProbMed"
+                <a href="https://huggingface.co/datasets/rippleripple/MMIR"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <!-- <i class="far fa-images"></i> -->
@@ -124,15 +136,22 @@
         <div id="results-carousel" class="carousel results-carousel">
           <div class="box m-5">
             <div class="content has-text-centered">
-              <img src="static/images/teaser_example.png" alt="adversarial example" width="84%"/>
-              <p> An example illustrating the potential for misleading accuracy in existing evaluations.  While the model correctly identifies the position of an existing finding in the standard evaluation, it fails to differentiate between actual and hallucinated positions when subjected to an adversarial evaluation.
+              <img src="static/images/teaser.png" alt="example" width="84%"/>
+              <p> An illustration of multimodal inconsistency reasoning on a webpage.} An agent examines a webpage where the brand “IKEA AB” is mentioned, but other elements clearly refer to “Lorell.” Detecting this brand identity misattribution requires the ability to compare text fields across different sections of the page and reconcile them with accompanying images or context—an inherently multimodal reasoning task.
               </p>
             </div>
           </div>
           <div class="box m-5">
             <div class="content has-text-centered">
-              <img src="static/images/teaser_stats.png" alt="stats adversarial" width="84%"/>
-              <p> Accuracy of four LMMs on two types of specialized questions in medical diagnoses, with and without adversarial pairs. The significant drop in accuracy with adversarial pairs highlights the models' unreliability in handling medical diagnoses.
+              <img src="static/images/examples.png" alt="stats adversarial" width="84%"/>
+              <p> There are five inconsistency categories in the MMIR benchmark, posing diverse challenges.
+              </p>
+            </div>
+          </div>
+          <div class="box m-5">
+            <div class="content has-text-centered">
+              <img src="static/images/qualitative_example.png" alt="stats adversarial" width="84%"/>
+              <p> A Qualitative Example showing a test sample in MMIR tested under the two evaluation settings with ground-truth answer and responses of the six tested models.
               </p>
             </div>
           </div>
