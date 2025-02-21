@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Worse than Random? An Embarrassingly Simple Probing Evaluation of Large Multimodal Models in Medical VQA">
+  <meta name="keywords" content="ProbMed, Prob Med">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Worse than Random? An Embarrassingly Simple Probing Evaluation of Large Multimodal Models in Medical VQA</title>
+
+  <link rel="icon" href="./static/images/mathvista.png">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/leaderboard.css">
+
+  <!-- <link href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator_bulma.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script> -->
+  <script type="text/javascript" src="static/js/sort-table.js" defer></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/explorer-index.js"></script>
+  <script src="./static/js/question_card.js"></script>
+
+  <script src="./static/js/leaderboard_testmini.js"></script>  
+  <script src="./data/results/output_folders.js" defer></script>
+  <script src="./data/results/model_scores.js" defer></script>
+
+  <script src="./visualizer/data/data_public.js" defer></script>
+</head>
+<body>
+
+<!-- Heading -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Worse than Random? An Embarrassingly Simple Probing Evaluation of Large Multimodal Models in Medical VQA</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://Jackie-2000.github.io/">Qianqi Yan</a><sup style="color:#6fbf73;">1</sup>,</span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=kDzxOzUAAAAJ&hl=en">Xuehai He</a><sup style="color:#6fbf73;">1</sup>,</span>
+            <span class="author-block">
+              <a href="https://xiangyue9607.github.io/">Xiang Yue</a><sup style="color:#ed4b82">2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://eric-xw.github.io/">Xin Eric Wang</a><sup style="color:#6fbf73;">1</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup style="color:#6fbf73;">1</sup>University of California, Santa Cruz,</span><br>
+            <span class="author-block"><sup style="color:#ed4b82">2</sup>Carnegie Mellon University</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2405.20421"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2405.20421"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/eric-ai-lab/ProbMed"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/rippleripple/ProbMed"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <!-- <i class="far fa-images"></i> -->
+                      <p style="font-size:18px">🤗</p>
+                      <!-- 🔗 -->
+                  </span>
+                  <span>Dataset</span>
+                </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teaser figures -->
+<section class="section">
+  <div class="container" style="margin-top: -150px; margin-bottom: -100px;">
+    <div class="columns is-centered m-6">
+      <div class="column is-full has-text-centered content">
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="box m-5">
+            <div class="content has-text-centered">
+              <img src="static/images/teaser_example.png" alt="adversarial example" width="84%"/>
+              <p> An example illustrating the potential for misleading accuracy in existing evaluations.  While the model correctly identifies the position of an existing finding in the standard evaluation, it fails to differentiate between actual and hallucinated positions when subjected to an adversarial evaluation.
+              </p>
+            </div>
+          </div>
+          <div class="box m-5">
+            <div class="content has-text-centered">
+              <img src="static/images/teaser_stats.png" alt="stats adversarial" width="84%"/>
+              <p> Accuracy of four LMMs on two types of specialized questions in medical diagnoses, with and without adversarial pairs. The significant drop in accuracy with adversarial pairs highlights the models' unreliability in handling medical diagnoses.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<!-- Abstract -->
+<section class="section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Introduction</h2>
+        <div class="content has-text-justified">
+          <p>
+            Large Multimodal Models (LMMs) have shown remarkable progress in medical Visual Question Answering (Med-VQA), achieving high accuracy on existing benchmarks. However, their reliability under robust evaluation is questionable. This study reveals that when subjected to simple probing evaluation, state-of-the-art models perform worse than random guessing on medical diagnosis questions. 
+          </p>
+          <p>
+            To address this critical evaluation problem, we introduce the <b>Probing Evaluation for Medical Diagnosis (ProbMed)</b> dataset to rigorously assess LMM performance in medical imaging through <b>probing evaluation</b> and <b>procedural diagnosis</b>. Particularly, probing evaluation features pairing original questions with negation questions with hallucinated attributes, while procedural diagnosis requires reasoning across various diagnostic dimensions for each image, including modality recognition, organ identification, clinical findings, abnormalities, and positional grounding. 
+          </p>
+          <p>
+            Our evaluation reveals that top-performing models like GPT-4o, GPT-4V and Gemini Pro perform worse than random guessing on specialized diagnostic questions, indicating significant limitations in handling fine-grained medical inquiries. Besides, models like LLaVA-Med struggle even with more general questions, and results from CheXagent demonstrate the transferability of expertise across different modalities of the same organ, showing that specialized domain knowledge is still crucial for improving performance. This study underscores the urgent need for more robust evaluation to ensure the reliability of LMMs in critical fields like medical diagnosis, and current LMMs are still far from applicable to those fields.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+</div>
+</section>
+
+<!-- DATASET SECTION -->
+
+<section class="hero is-light is-small">
+  <div class="hero-body has-text-centered">
+    <h1 class="title is-1 mathvista">ProbMed Benchmark</h1>
+  </div>
+</section>        
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Overview</h2>
+        <div class="content has-text-justified">
+          <p>
+            ProbMed draws from two comprehensive biomedical datasets MedICaT and ChestX-ray14 to compile a diverse set of <b>6,303 images</b>. These images span three modalities (X-ray, MRI, and CT scan) and four organs (abdomen, brain, chest, and spine). After preprocessing, we generated a diverse set of high-quality questions for each image, covering various diagnostic dimensions. This process resulted in a total of <b>57,132 question-answer pairs</b>, averaging 9 pairs per image.
+          </p>
+          <ul>
+            <li><b>Is the current evaluation of LMMs for Med-VQA reliable?</b> 
+            <p>
+              One of the main motivations behind ProbMed is to assess the models' ability to accurately distinguish between relevant and irrelevant features. ProbMed pairs original questions with negation questions containing hallucinated attributes. This method challenges the model robustness by requiring them to identify true conditions while disregarding false, hallucinated ones. For instance, a question about a specific finding is paired with a negated question featuring a different, non-existent finding to test if the model can exclusively identify the true finding.
+            </p></li>
+            <li><b>How reliable are LMMs on medical diagnosis, ranging from general questions to specialized diagnostic questions?</b>
+            <p>
+              To ensure a comprehensive evaluation, ProbMed includes questions that require reasoning across multiple diagnostic dimensions for each image. These dimensions include modality recognition, organ identification, clinical findings, abnormalities, and positional reasoning. This multifaceted approach assesses a model's diagnostic capabilities beyond simple question-answer pairs, requiring it to integrate various pieces of information to form a coherent diagnostic picture.
+            </p></li>
+          </ul>
+
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/images/flow_diagram.png" alt="algebraic reasoning" width="80%"/>
+                <p> Flow diagram of the ProbMed data curation process. Two comprehensive biomedical datasets were utilized to collect source data and construct a metadata file, enabling the automatic generation of high-quality question-answer pairs for the ProbMed dataset. </p>
+              </div>
+            </div>
+            <div class="box m-5">
+              <div class="content has-text-centered">
+                <img src="static/images/table_stats.png" alt="arithmetic reasoning" width="80%"/>
+                <p> Dataset Statistics of ProbMed. There are 6.3k images and 57k VQA pairs in total. The dataset is balanced within each question type and image type. </p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            You can download the dataset on <a href="https://huggingface.co/datasets/rippleripple/ProbMed" target="_blank">Hugging Face Dataset</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS SECTION -->
+<section class="hero is-light is-small">
+  <div class="hero-body has-text-centered">
+    <h1 class="title is-1 mathvista">Experimental Analysis</h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <!-- adversarial eval -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Is Current Evaluation of LMMs for Med-VQA Reliable?</h2>
+        <div class="content has-text-justified">
+          <ul>
+            <li><b>Probing Evaluation with Adversarial Pairs in VQA-RAD</b> 
+            <p>
+              We construct adversarial pairs for 118 test instances where the answer is "yes" out of 272 closed-ended question-answers pairs within the test set of an existing benchmark. Each adversarial pair was manually created such that, based on the limited information from the original question-answer pair, the answer to the adversarial question had to be negated. This process resulted in 236 question-answer pairs in total. The adversarial questions in this subset are less challenging than those in ProbMed, as they often involve a simple semantic negation of the original question due to limited information.
+            </p>
+            <p>
+              The results reveal the significant impact of adversarial pairs on model performance. Although the original accuracy appears very high for some underperforming models, the accuracy drops drastically after balancing the subset with adversarial pairs: 19.49% for GPT-4o, 6.78% for GPT-4V and 16.95% for Gemini Pro, with an average decrease of <b>35.84%</b> across the tested models.
+            </p></li>
+
+            <li><b> Probing Evaluation with Adversarial Pairs in ProbMed</b>
+            <p>
+              Similar significant impact of adversarial pairs are observed in ProbMed. The accuracy of more capable models is generally less affected by the introduction of challenging adversarial pairs. However, even the most robust models experience <b>a minimum drop of 11.19%</b> in accuracy when tested with ProbMed's challenging questions, with an average decrease of <b>37.09%</b> across the tested models, highlighting the critical role of probing evaluation in evaluating Med-VQA performance comprehensively.
+            </p></li>
+          </ul>
+        
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="box m-5">
+            <div class="content has-text-centered">
+              <img src="static/images/results_adv_RAD.png" alt="grade-lv" width="60%"/>
+              <p>Model accuracy on the VQA-RAD test subset before and after introducing adversarial pairs. The table demonstrates the significant drop in accuracy across various models when adversarial pairs are added, highlighting the models' vulnerabilities to adversarial questions. The percentage decrease in accuracy is noted in parentheses.</p>
+            </div>
+          </div>
+          <div class="box m-5">
+            <div class="content has-text-centered">
+              <img src="static/images/results_adv_probmed.png" alt="grade-lv" width="60%"/>
+              <p>
+                Model accuracy after adding adversarial pairs to all question types except for abnormality in ProbMed. The results indicate a substantial decline in accuracy, underlining the robustness of ProbMed in challenging LMMs. The percentage drop in accuracy is noted in parentheses.</p>
+            </div>
+          </div>
+        </div>
+        
+        </div>
+      </div>
+    </div>
+
+    <!-- procedural eval -->
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered content">
+        <h2 class="title is-3" id="rq2"> How Reliable Are LMMs in Medical Diagnosis?</h2>
+        <div class="content has-text-justified">
+        <!-- main -->
+        <ul>
+          <li><b>Performance across Diagnostic Questions</b> 
+          <p>
+            After correcting model accuracy by introducing adversarial pairs, we continued to address the second research question and conducted diagnostic probing ranging from general to specialized diagnostic questions using the ProbMed dataset.
+          </p>
+          <p>
+            While GPT-4o, GPT-4V, and Gemini Pro outperform other models and excel in general tasks such as recognizing image modality and organs, their low performance in specialized tasks like determining the existence of abnormalities and answering fine-grained questions about condition/finding and position highlights a significant gap in their ability to aid in real-life diagnosis.
+          </p></li>
+        </ul>
+        <div class="content">
+          <p class="mt-3"> Categorical and overall accuracy (%) of different models aggregated among all image types in ProbMed. The best result in each question category is in-bold, and the second best is underlined.
+          </p>
+
+          <table class="js-sort-table" id="results">
+            <tr>
+                <td class="js-sort-number"><strong>#</strong></td>
+                <td class="js-sort-number"><strong>Model</strong></td>
+                <td class="js-sort-number"><strong>Source</strong></td>
+                <td class="js-sort-number"><strong>Overall</strong></td>
+                <td class="js-sort-number"><strong>Modality</strong></td>
+                <td class="js-sort-number"><strong>Organ</strong></td>
+                <td class="js-sort-number"><strong>Abnormality</strong></td>
+                <td class="js-sort-number"><strong>Condition/Finding</strong></td>
+                <td class="js-sort-number"><strong>Position</strong></td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td><b class="">GPT-4o</b></td>
+              <td><a href="https://openai.com/index/hello-gpt-4o/" class="ext-link" style="font-size: 16px;">Link</a></td>
+              <td><b>55.60</b></td>
+              <td><b>97.42</b></td>
+              <td>69.46</td>
+              <td>61.97</td>
+              <td><u>29.30</u></td>
+              <td><b>24.06</b></td>         
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><b class="">GPT-4V</b></td>
+              <td><a href="https://openai.com/index/gpt-4v-system-card/" class="ext-link" style="font-size: 16px;">Link</a></td>
+              <td><u>55.28</u></td>
+              <td>92.51</td>
+              <td>71.73</td>
+              <td>53.30</td>
+              <td><u>35.19</u></td>
+              <td><u>22.40</u></td>         
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><b class="">Gemini 1.5 Pro</b></td>
+              <td><a href="https://storage.googleapis.com/deepmind-media/gemini/gemini_v1_5_report.pdf" class="ext-link" style="font-size: 16px;">Link</a></td>
+              <td>55.08</td>
+              <td><u>96.47</u></td>
+              <td>75.69</td>
+              <td><u>62.59</u></td>
+              <td>27.93</td>
+              <td>17.54</td>            
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><b class="">Med-Flamingo</b></td>
+              <td><a href="https://github.com/snap-stanford/med-flamingo" class="ext-link" style="font-size: 16px;">Link</a></td>
+              <td>35.66</td>
+              <td>44.15</td>
+              <td>61.39</td>
+              <td>50.00</td>
+              <td>26.33</td>
+              <td>5.65</td>                    
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><b class="">CheXagent</b></td>
+              <td><a href="https://github.com/Stanford-AIMI/CheXagent" class="ext-link" style="font-size: 16px;">Link</a></td>
+              <td>30.61</td>
+              <td>37.25</td>
+              <td>33.95</td>
+              <td><b>73.31</b></td>
+              <td>28.52</td>
+              <td>7.48</td>                    
+            </tr>
+            <tr>
+              <td>6</td>
+              <td><b class="">BiomedGPT</b></td>
+              <td><a href="https://github.com/taokz/BiomedGPT" class="ext-link" style="font-size: 16px;">Link</a></td>
+              <td>33.34</td>
+              <td>60.25</td>
+              <td>46.81</td>
+              <td>50.31</td>
+              <td>14.13</td>
+              <td>6.11</td>                    
+            </tr>
+            <tr>
+              <td>7</td>
+              <td><b class="">LLaVA-Med</b></td>
+              <td><a href="https://github.com/microsoft/LLaVA-Med" class="ext-link" style="font-size: 16px;">Link</a></td>
+              <td>17.90</td>
+              <td>5.49</td>
+              <td>32.98</td>
+              <td>38.76</td>
+              <td>20.39</td>
+              <td>5.37</td>               
+            </tr>
+            <tr>
+              <td>8</td>
+              <td><b class="">MiniGPT-v2</b></td>
+              <td><a href="https://github.com/Vision-CAIR/MiniGPT-4/tree/main" class="ext-link" style="font-size: 16px;">Link</a></td>
+              <td>27.67</td>
+              <td>3.25</td>
+              <td><u>76.29</u></td>
+              <td>50.09</td>
+              <td>15.23</td>
+              <td>8.05</td>                  
+            </tr>
+            <tr>
+              <td>9</td>
+              <td><b class="">LLaVA-v1.6 (7B)</b></td>
+              <td><a href="https://github.com/haotian-liu/LLaVA" class="ext-link" style="font-size: 16px;">Link</a></td>
+              <td>24.96</td>
+              <td>6.77</td>
+              <td><b>80.70</b></td>
+              <td>46.18</td>
+              <td>3.57</td>
+              <td>1.07</td>       
+            </tr>
+            <tr>
+              <td>10</td>
+              <td><b>LLaVA-v1 (7B)</b></td>
+              <td><a href="https://github.com/haotian-liu/LLaVA" class="ext-link" style="font-size: 16px;">Link</a></td>
+              <td>19.30</td>
+              <td>25.28</td>
+              <td>40.53</td>
+              <td>50.00</td>
+              <td>0.34</td>
+              <td>0.10</td> 
+            </tr>
+            <tr>
+              <td>*</td>
+              <td><b>Random Chance</b></td>
+              <td>-</td>
+              <td>32.13</td>
+              <td>25.00</td>
+              <td>25.00</td>
+              <td>50.00</td>
+              <td><b>35.67</b></td>
+              <td><b>36.48</b></td>                                
+            </tr>                                                      
+          </table>
+
+          <div>
+          <p>🚨 To submit your results to the leaderboard, please send to <a href="qyan79@ucsc.edu">this email</a> with your result json files.</p>
+          <p>🚨 For more submission details, please refer to <a href="https://github.com/eric-ai-lab/ProbMed">this link.</a>
+          </p>
+          </div>
+        </div>
+
+        <!-- error analysis -->
+        <ul>
+          <li><b>Error Analysis in Procedural Diagnosis</b> 
+          <p>
+            An error analysis focusing on GPT-4V and Gemini Pro across specialized question types - Abnormality, Condition/Finding, and Position is further conducted. Each accuracy measurement is conditional on the model successfully answering the preceding diagnostic questions, reflecting a procedural diagnosis approach. This analysis reveals both models' vulnerabilities to hallucination errors, particularly as they progress through the diagnostic procedure, with Gemini Pro being more prone to accepting false conditions and positions.
+          </p>
+          </li>
+        </ul>
+        <div class="box m-5">
+          <div class="content has-text-centered">
+            <img src="./static/images/error_analysis.png" alt="error" width="60%"/>
+            <p>
+              Error Analysis of GPT-4V and Gemini Pro on ProbMed. The table shows the accuracy and types of errors for three specialized question types. Errors are categorized into wrong answers, rejection to answer, denying ground truth, and accepting hallucinations, providing a detailed breakdown of model performance and failure modes.</p>
+          </div>
+        </div>
+        
+        <!-- transferability -->
+        <ul>
+          <li><b>Transferability of Domain Expertise</b> 
+          <p>
+            CheXagent, a model trained exclusively on chest X-rays images, performs best in detecting abnormalities and identifying conditions/findings among all seven models when tested on chest X-ray images. We conducted a finer-grained analysis to explore whether the model's expertise in identifying features of a particular organ can be transferred to other imaging modalities.
+          </p>
+          <p>
+            CheXagent achieves significantly higher accuracy in identifying chestrelated features compared to other organs as well as demonstrating higher accuracy in identifying conditions and findings in CT scans and MRIs of the chest compared with other organs within the same unseen modality. This indicates that specialized knowledge gained on chest X-rays can be transferred to other imaging modalities of the same organ in a zero-shot manner, highlighting the potential for cross-modality expertise transfer in real-life medical imaging diagnostics.
+          </p>
+          </li>
+        </ul>
+        <div class="box m-5">
+          <div class="content has-text-centered">
+            <img src="./static/images/transfer.png" alt="error" width="60%"/>
+            <p>
+              Accuracy comparison of CheXagent in identifying organs and conditions/findings across different modalities. The model demonstrates significantly higher accuracy in identifying organs on chest images compared to images of other organs for both MRI and CT scans. Additionally, CheXagent shows improved accuracy in identifying conditions/findings on chest images, indicating the transferability of its specialized knowledge from chest X-ray training to other imaging modalities.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3 has-text-centered">BibTeX</h2>
+    <pre><code>@misc{yan2024worse,
+      title={Worse than Random? An Embarrassingly Simple Probing Evaluation of Large Multimodal Models in Medical VQA}, 
+      author={Qianqi Yan and Xuehai He and Xiang Yue and Xin Eric Wang},
+      year={2024},
+      eprint={2405.20421},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI}
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <!-- <div class="container"> -->
+    <div class="content has-text-centered">
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is website adapted from <a href="https://nerfies.github.io/">Nerfies</a>, and <a href="https://mathvista.github.io/">MathVista</a>licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+</footer>
+
+</body>
+</html>
