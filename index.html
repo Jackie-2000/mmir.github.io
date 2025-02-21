@@ -148,13 +148,6 @@
               </p>
             </div>
           </div>
-          <div class="box m-5">
-            <div class="content has-text-centered">
-              <img src="static/images/qualitative_example.png" alt="stats adversarial" width="84%"/>
-              <p> A Qualitative Example showing a test sample in MMIR tested under the two evaluation settings with ground-truth answer and responses of the six tested models.
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -176,11 +169,14 @@
             <li><i>Identity Misattribution:</i> Mislabeling of entities (objects, locations, brands etc.) that conflict with other elements.</li>
             <li><i>Contextual Mismatch:</i> Tonal, thematic, or situational incompatibility between elements.</li>
             <li><i>Quantitative Discrepancy:</i>  Numerical or statistical inconsistencies between elements.</li>
-            <li><i>Temporal/Spatial Incoherence</i> Implied timelines, dates, or spatial relationships that are impossible or conflicting.</li>
+            <li><i>Temporal/Spatial Incoherence:</i> Implied timelines, dates, or spatial relationships that are impossible or conflicting.</li>
           </ul>
           <p>
-            Our evaluation of six state-of-the-art MLLMs reveals significant gaps in handling real-world inconsistencies, with proprietary models outperforming open-source models by up to 30%. The benchmark provides insights into current limitations and future directions for multimodal reasoning.
+            We evaluate six state-of-the-art MLLMs, showing that models with dedicated multimodal reasoning capabilities, such as o1, substantially outperform their counterparts while open-source models remain particularly vulnerable to inconsistency errors.
           </p>
+          <p>
+            Detailed error analyses further show that models excel in detecting inconsistencies confined to a single modality, particularly in text, but struggle with cross-modal conflicts and complex layouts. Probing experiments reveal that single-modality prompting, including Chain-of-Thought (CoT) and Set-of-Mark (SoM) methods, yields marginal gains, revealing a key bottleneck in cross-modal reasoning. Our findings highlight the need for advanced multimodal reasoning and point to future research on multimodal inconsistency.
+          </p> 
         </div>
       </div>
     </div>
@@ -192,7 +188,7 @@
 
 <section class="hero is-light is-small">
   <div class="hero-body has-text-centered">
-    <h1 class="title is-1 mathvista">ProbMed Benchmark</h1>
+    <h1 class="title is-1 mathvista">MMIR Benchmark</h1>
   </div>
 </section>        
 <section class="section">
@@ -201,37 +197,41 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Overview</h2>
         <div class="content has-text-justified">
-          <p>
-            ProbMed draws from two comprehensive biomedical datasets MedICaT and ChestX-ray14 to compile a diverse set of <b>6,303 images</b>. These images span three modalities (X-ray, MRI, and CT scan) and four organs (abdomen, brain, chest, and spine). After preprocessing, we generated a diverse set of high-quality questions for each image, covering various diagnostic dimensions. This process resulted in a total of <b>57,132 question-answer pairs</b>, averaging 9 pairs per image.
-          </p>
-          <ul>
-            <li><b>Is the current evaluation of LMMs for Med-VQA reliable?</b> 
-            <p>
-              One of the main motivations behind ProbMed is to assess the models' ability to accurately distinguish between relevant and irrelevant features. ProbMed pairs original questions with negation questions containing hallucinated attributes. This method challenges the model robustness by requiring them to identify true conditions while disregarding false, hallucinated ones. For instance, a question about a specific finding is paired with a negated question featuring a different, non-existent finding to test if the model can exclusively identify the true finding.
-            </p></li>
-            <li><b>How reliable are LMMs on medical diagnosis, ranging from general questions to specialized diagnostic questions?</b>
-            <p>
-              To ensure a comprehensive evaluation, ProbMed includes questions that require reasoning across multiple diagnostic dimensions for each image. These dimensions include modality recognition, organ identification, clinical findings, abnormalities, and positional reasoning. This multifaceted approach assesses a model's diagnostic capabilities beyond simple question-answer pairs, requiring it to integrate various pieces of information to form a coherent diagnostic picture.
-            </p></li>
-          </ul>
-
+          <h3 class="title is-4">Key Features</h3>
+            <ul>
+              <li>534 carefully validated samples</li>
+              <li>Real-world artifacts: Webpages, Slides, Posters</li>
+              <li>Synthetic inconsistency injection</li>
+              <li>Multi-stage verification pipeline</li>
+            </ul>
           <div id="results-carousel" class="carousel results-carousel">
             <div class="box m-5">
               <div class="content has-text-centered">
-                <img src="static/images/flow_diagram.png" alt="algebraic reasoning" width="80%"/>
-                <p> Flow diagram of the ProbMed data curation process. Two comprehensive biomedical datasets were utilized to collect source data and construct a metadata file, enabling the automatic generation of high-quality question-answer pairs for the ProbMed dataset. </p>
+                <img src="static/images/stats.png" alt="Dataset Statistics">
+            <p class="has-text-centered"><b>MMIR Statistics</b>. Breakdown of the dataset by artifact category and error type.</p>
               </div>
             </div>
             <div class="box m-5">
               <div class="content has-text-centered">
-                <img src="static/images/table_stats.png" alt="arithmetic reasoning" width="80%"/>
-                <p> Dataset Statistics of ProbMed. There are 6.3k images and 57k VQA pairs in total. The dataset is balanced within each question type and image type. </p>
+                <img src="static/images/data_filter.png" alt="data filtering">
+                <p> MMIR Data filtering process. Details in paper.</p>
               </div>
             </div>
           </div>
 
+          <div class="column">
+            <h3 class="title is-4 mt-4">Evaluation Settings</h3>
+            <ul>
+              <li><i>Open-ended:</i> Models receive the artifact with a fixed prompt <i>Q<sub>open_ended</sub></i> and generate a free-form response that identifies the semantic mismatch.</li>
+              <li><i>Multiple-choice:</i> Models receive the artifact with a combined prompt <i>Q_<sub>MCQ</sub> = (Q<sub>open_ended</sub>, C<sub>i</sub>)</i>. Each candidate in C<sub>i</sub> is a textual description of an element. The model must select, from these options, the element(s) corresponding to the introduced inconsistency.</li>
+            </ul>
+          </div>
+          <div class="column">
+            <img src="static/images/qualitative_example.png" alt="stats adversarial" width="84%"/>
+            <p> A Qualitative Example showing a test sample in MMIR tested under the two evaluation settings with ground-truth answer and responses of the six tested models.
+          </div>
           <p>
-            You can download the dataset on <a href="https://huggingface.co/datasets/rippleripple/ProbMed" target="_blank">Hugging Face Dataset</a>.
+            You can download the dataset on <a href="https://huggingface.co/datasets/rippleripple/MMIR" target="_blank">Hugging Face Dataset</a>.
           </p>
         </div>
       </div>
